@@ -1,0 +1,16 @@
+# Large dataset files
+cache/
+output/*.csv
+output/*.parquet
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
