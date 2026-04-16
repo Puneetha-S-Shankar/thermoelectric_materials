@@ -14,3 +14,5 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+aflow_diverse_alloys.csv
