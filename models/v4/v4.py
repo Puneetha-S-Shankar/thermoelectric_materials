@@ -250,6 +250,44 @@ overall_r2_imputed = np.mean([results_imputed[t]['R²'] for t in targets_process
 print(f"\n{'OVERALL':<20} {'-':<15} {overall_r2_imputed:<12.4f}")
 
 # ============================================================================
+# PLOT: MAE Over Learning Phase (Training History)
+# ============================================================================
+print("\n[STEP 4] Creating MAE learning curves...")
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig.suptitle('MAE Over Training Epochs: Drop NaN vs Impute+RobustScaler', 
+             fontsize=14, fontweight='bold')
+
+# Plot 1: Drop NaN approach
+epochs1 = range(len(history1.history['mae']))
+ax1 = axes[0]
+ax1.plot(epochs1, history1.history['mae'], label='Training MAE', linewidth=2, color='#d32f2f')
+ax1.plot(epochs1, history1.history['val_mae'], label='Validation MAE', linewidth=2, color='#ff6b6b', linestyle='--')
+ax1.set_xlabel('Epoch', fontsize=10, fontweight='bold')
+ax1.set_ylabel('MAE', fontsize=10, fontweight='bold')
+ax1.set_title('Approach 1: Drop NaN\n(6,041 rows lost - 25.1%)', fontsize=11, fontweight='bold')
+ax1.legend(fontsize=10)
+ax1.grid(True, alpha=0.3)
+ax1.set_yscale('log')
+
+# Plot 2: Impute + RobustScaler
+epochs2 = range(len(history2.history['mae']))
+ax2 = axes[1]
+ax2.plot(epochs2, history2.history['mae'], label='Training MAE', linewidth=2, color='#00c853')
+ax2.plot(epochs2, history2.history['val_mae'], label='Validation MAE', linewidth=2, color='#66bb6a', linestyle='--')
+ax2.set_xlabel('Epoch', fontsize=10, fontweight='bold')
+ax2.set_ylabel('MAE', fontsize=10, fontweight='bold')
+ax2.set_title('Approach 2: Impute + RobustScaler\n(V4 Method - Keeps all data!)', fontsize=11, fontweight='bold')
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+ax2.set_yscale('log')
+
+plt.tight_layout()
+plt.savefig('mae_learning_curves.png', dpi=300, bbox_inches='tight')
+print("✓ Saved: mae_learning_curves.png")
+plt.show()
+
+# ============================================================================
 # COMPARISON
 # ============================================================================
 print("\n" + "=" * 100)
